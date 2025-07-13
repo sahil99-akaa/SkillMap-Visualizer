@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkillMap Visualizer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6">
+  
+  <h1 class="text-3xl font-bold mb-6 text-blue-600">🎯 SkillMap Visualizer</h1>
+
+  <div class="flex gap-4 mb-4">
+    <input id="skillInput" type="text" placeholder="Enter a skill (e.g. HTML)" 
+           class="px-4 py-2 border rounded-lg outline-none" />
+    <button onclick="addSkill()" 
+            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+      Add Skill
+    </button>
+  </div>
+
+  <div id="skillList" class="mb-6 text-gray-700 font-medium"></div>
+
+  <div id="suggestions" class="bg-white p-4 rounded shadow w-full max-w-md mb-6">
+    <h2 class="text-xl font-semibold mb-2">Suggested Job Titles:</h2>
+    <ul id="jobList" class="list-disc list-inside text-gray-800"></ul>
+  </div>
+
+  <!-- Skill Map Chart -->
+  <div class="bg-white p-4 rounded shadow w-full max-w-md">
+    <h2 class="text-xl font-semibold mb-4">🧠 Skill Map Visualization</h2>
+    <canvas id="skillChart" width="400" height="400"></canvas>
+  </div>
+
+  <script>
+    const skills = [];
+
+    const skillCategories = {
+      frontend: ["html", "css", "javascript", "react"],
+      backend: ["nodejs", "express", "mongodb", "mysql"],
+      data: ["python", "pandas", "numpy", "excel", "scikit-learn"],
+      devops: ["linux", "docker", "aws"],
+      mobile: ["android", "java", "kotlin"],
+      design: ["figma", "adobe xd", "design"],
+      ai: ["tensorflow", "machine learning", "deep learning"]
+    };
+
+    const jobMatches = [
+      { title: "Frontend Developer", required: ["html", "css", "javascript"] },
+      { title: "React Developer", required: ["javascript", "react"] },
+      { title: "Backend Developer", required: ["nodejs", "express", "mongodb"] },
+      { title: "Full Stack Developer", required: ["html", "css", "javascript", "nodejs", "mongodb"] },
+      { title: "Data Analyst", required: ["python", "pandas", "excel"] },
+      { title: "Data Scientist", required: ["python", "numpy", "pandas", "scikit-learn"] },
+      { title: "DevOps Engineer", required: ["linux", "docker", "aws"] },
+      { title: "Android Developer", required: ["java", "kotlin", "android"] },
+      { title: "UI/UX Designer", required: ["figma", "adobe xd", "design"] },
+      { title: "AI/ML Engineer", required: ["python", "tensorflow", "machine learning"] }
+    ];
+
+    function addSkill() {
+      const input = document.getElementById("skillInput");
+      const skill = input.value.trim().toLowerCase();
+      if (skill && !skills.includes(skill)) {
+        skills.push(skill);
+        updateSkills();
+        updateJobs();
+        updateChart();
+        input.value = "";
+      }
+    }
+
+    function updateSkills() {
+      const skillList = document.getElementById("skillList");
+      skillList.innerHTML = "Your Skills: " + skills.join(", ");
+    }
+
+    function updateJobs() {
+      const jobList = document.getElementById("jobList");
+      jobList.innerHTML = "";
+
+      let matchedJobs = [];
+
+      jobMatches.forEach(job => {
+        const hasAll = job.required.every(skill => skills.includes(skill));
+        if (hasAll) {
+          matchedJobs.push(job.title);
+        }
+      });
+
+      if (matchedJobs.length > 0) {
+        matchedJobs.forEach(job => {
+          jobList.innerHTML += `<li>${job}</li>`;
+        });
+      } else {
+        jobList.innerHTML = "<li>No job matches yet. Add more skills!</li>";
+      }
+    }
+
+    // ========== Chart.js Setup ==========
+    const ctx = document.getElementById("skillChart").getContext("2d");
+    const chartData = {
+      labels: [],
+      datasets: [{
+        label: "Skill Categories",
+        data: [],
+        backgroundColor: [
+          "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#14b8a6", "#ec4899"
+        ],
+        borderWidth: 1
+      }]
+    };
+    const skillChart = new Chart(ctx, {
+      type: "doughnut",
+      data: chartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "right"
+          }
+        }
+      }
+    });
+
+    function updateChart() {
+      const counts = {};
+
+      for (const [category, catSkills] of Object.entries(skillCategories)) {
+        counts[category] = skills.filter(skill => catSkills.includes(skill)).length;
+      }
+
+      const activeCategories = Object.entries(counts).filter(([_, count]) => count > 0);
+
+      chartData.labels = activeCategories.map(([cat]) => cat.toUpperCase());
+      chartData.datasets[0].data = activeCategories.map(([_, count]) => count);
+
+      skillChart.update();
+    }
+  </script>
+</body>
+</html>
