@@ -11,17 +11,36 @@
     tailwind.config = { darkMode: 'class' }
   </script>
 
-  
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png" />
+
   <style>
-    body { font-family: 'Inter', sans-serif; transition: background 0.3s ease; }
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background 0.3s ease;
+    }
     .badge {
-      @apply bg-blue-100 dark:bg-blue-800 dark:text-white text-blue-800 text-sm font-semibold px-3 py-1 rounded-full shadow m-1 flex items-center;
+      background-color: #dbeafe;
+      color: #1e40af;
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      margin: 0.25rem;
+      display: flex;
+      align-items: center;
       animation: fadeIn 0.4s ease-in-out;
+    }
+    html.dark .badge {
+      background-color: #1e40af;
+      color: white;
     }
     .badge span {
       margin-left: 8px;
@@ -32,55 +51,64 @@
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    html {
+      scroll-behavior: smooth;
+    }
   </style>
 </head>
-<body div class="text-center mt-6">
+<body class="text-center mt-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+  
+  <!-- Logo -->
   <img src="ChatGPT Image Jul 13, 2025, 10_22_19 PM.png" alt="SkillMap Logo" class="w-32 mx-auto mb-2">
   <span class="text-sm text-gray-500 dark:text-gray-400">Visualize your path 🚀</span>
-</div>
-
 
   <!-- Header -->
-  <div class="w-full flex justify-between max-w-4xl items-center mb-6">
+  <div class="w-full flex justify-between items-center max-w-4xl mx-auto mb-6 px-4">
     <h1 class="text-3xl sm:text-4xl font-bold text-blue-700 dark:text-blue-400">🎯 SkillMap Visualizer</h1>
-    <button onclick="toggleDarkMode()" class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+    <button onclick="toggleDarkMode()" aria-label="Toggle dark mode" class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
       Toggle Dark Mode
     </button>
   </div>
 
   <!-- Input Section -->
-  <div class="flex flex-wrap gap-3 mb-4 w-full max-w-lg justify-center">
-    <input id="skillInput" type="text" placeholder="Enter a skill (e.g. Python)"
+  <div class="flex flex-wrap gap-3 mb-2 w-full max-w-lg justify-center mx-auto px-4">
+    <input id="skillInput" aria-label="Enter a skill" type="text" placeholder="Enter a skill (e.g. Python)"
            class="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400" />
     <button onclick="addSkill()"
             class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all">
       Add Skill
-    </button> [please add skill one by one]
+    </button>
     <button onclick="clearSkills()" class="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition-all">
       Refresh
     </button>
   </div>
+  <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Tip: Add one skill at a time like "Python", "React", "Excel"</p>
 
-  
-  <div id="skillList" class="flex flex-wrap justify-center mb-6 w-full max-w-xl"></div>
+  <!-- Skill Tags -->
+  <div id="skillList" class="flex flex-wrap justify-center mb-6 w-full max-w-xl mx-auto px-4"></div>
 
   <!-- Job Suggestions -->
-  <div id="suggestions" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mb-6">
-    <h2 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">Suggested Job Titles:</h2>
-    <ul id="jobList" class="list-disc list-inside text-gray-700 dark:text-gray-300"></ul>
+  <div id="suggestions" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto mb-6 px-4">
+    <h2 class="text-xl font-semibold mb-2">Suggested Job Titles:</h2>
+    <ul id="jobList" class="list-disc list-inside"></ul>
   </div>
 
   <!-- Motivation -->
-  <div id="motivationBox" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mb-6">
-    <h2 class="text-xl font-semibold mb-2 text-gray-800 dark:text-white">🔥 Motivation Boost:</h2>
-    <p id="motivationText" class="text-gray-700 dark:text-gray-300"></p>
+  <div id="motivationBox" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto mb-6 px-4">
+    <h2 class="text-xl font-semibold mb-2">🔥 Motivation Boost:</h2>
+    <p id="motivationText"></p>
   </div>
 
   <!-- Chart -->
-  <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-white">🧠 Skill Map Chart</h2>
+  <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto px-4">
+    <h2 class="text-xl font-semibold mb-4">🧠 Skill Map Chart</h2>
     <canvas id="skillChart" height="300"></canvas>
   </div>
+
+  <!-- Footer -->
+  <footer class="mt-10 text-gray-500 dark:text-gray-400 text-sm mb-6">
+    Made with ❤️ by You • © 2025 SkillMap
+  </footer>
 
   <!-- Script -->
   <script>
@@ -181,7 +209,6 @@
       });
 
       suggestionsBox.style.display = skills.length ? "block" : "none";
-
       if (matched === 0 && skills.length) {
         jobList.innerHTML = "<li>No matching jobs yet. Keep adding skills!</li>";
       }
