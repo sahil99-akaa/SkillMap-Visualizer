@@ -23,97 +23,63 @@
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      transition: background 0.3s ease;
       background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/dot-grid.png');
-      background-size: contain;
+      background-color: #f9fafb;
+      background-size: 50px 50px;
+      transition: background 0.3s ease;
     }
-
+    html.dark body {
+      background-color: #111827;
+      background-image: none;
+    }
     .badge {
-      background-color: #dbeafe;
-      color: #1e40af;
+      background-color: #e0f2fe;
+      color: #0369a1;
       font-size: 0.875rem;
       font-weight: 600;
-      padding: 0.25rem 0.75rem;
+      padding: 0.35rem 0.9rem;
       border-radius: 9999px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       margin: 0.25rem;
       display: flex;
       align-items: center;
-      animation: fadeIn 0.4s ease-in-out;
-      transition: transform 0.2s ease, background-color 0.2s ease;
+      transition: transform 0.2s ease;
     }
-
     .badge:hover {
-      transform: scale(1.1);
-      background-color: #bfdbfe;
+      transform: scale(1.05);
     }
-
     html.dark .badge {
       background-color: #1e40af;
       color: white;
     }
-
-    html.dark .badge:hover {
-      background-color: #3b82f6;
-    }
-
     .badge span {
       margin-left: 8px;
       cursor: pointer;
-      color: red;
-      font-weight: bold;
+      color: #dc2626;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    button {
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-
-    .animated-logo {
-      transition: transform 0.6s ease;
+    button:hover {
+      transform: translateY(-2px);
     }
-
-    .animated-logo:hover {
-      transform: rotate(12deg) scale(1.05);
-    }
-
     input:focus {
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+      border-color: #3b82f6;
     }
-
-    .button-enhance {
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .button-enhance:hover {
-      transform: scale(1.05);
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-      color: #3b82f6;
-    }
-
-    html.dark footer a:hover {
-      color: #60a5fa;
-    }
-
     html {
       scroll-behavior: smooth;
     }
   </style>
 </head>
 <body class="text-center mt-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-  
+
   <!-- Logo -->
-  <img src="ChatGPT Image Jul 13, 2025, 10_22_19 PM.png" alt="SkillMap Logo" class="w-32 mx-auto mb-2 animated-logo">
+  <img src="ChatGPT Image Jul 13, 2025, 10_22_19 PM.png" alt="SkillMap Logo" class="w-32 mx-auto mb-2 rounded-xl shadow-lg">
   <span class="text-sm text-gray-500 dark:text-gray-400">Visualize your path 🚀</span>
 
   <!-- Header -->
   <div class="w-full flex justify-between items-center max-w-4xl mx-auto mb-6 px-4">
     <h1 class="text-3xl sm:text-4xl font-bold text-blue-700 dark:text-blue-400">🎯 SkillMap Visualizer</h1>
-    <button onclick="toggleDarkMode()" aria-label="Toggle dark mode"
-      class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition button-enhance">
+    <button onclick="toggleDarkMode()" aria-label="Toggle dark mode" class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
       Toggle Dark Mode
     </button>
   </div>
@@ -123,11 +89,11 @@
     <input id="skillInput" aria-label="Enter a skill" type="text" placeholder="Enter a skill (e.g. Python)"
            class="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400" />
     <button onclick="addSkill()"
-            class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all button-enhance">
+            class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all">
       Add Skill
     </button>
-    <button onclick="clearSkills()" class="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition-all button-enhance">
-      Refresh
+    <button onclick="clearSkills()" class="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition-all">
+      Clear
     </button>
   </div>
   <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Tip: Add one skill at a time like "Python", "React", "Excel"</p>
@@ -155,7 +121,7 @@
 
   <!-- Footer -->
   <footer class="mt-10 text-gray-500 dark:text-gray-400 text-sm mb-6">
-    Made with ❤️ by <a href="#">You</a> • © 2025 SkillMap
+    Made with ❤️ by You • © 2025 SkillMap
   </footer>
 
   <!-- Script -->
