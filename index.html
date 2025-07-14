@@ -7,42 +7,34 @@
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { darkMode: 'class' }
-  </script>
+  <script> tailwind.config = { darkMode: 'class' }</script>
 
   <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="icon" type="image/png" href="favicon.png"/>
 
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-image: url('https://www.toptal.com/designers/subtlepatterns/patterns/dot-grid.png');
-      background-color: #f9fafb;
-      background-size: 50px 50px;
+      background: url('https://www.toptal.com/designers/subtlepatterns/patterns/dot-grid.png');
+      background-size: 300px;
       transition: background 0.3s ease;
     }
-    html.dark body {
-      background-color: #111827;
-      background-image: none;
-    }
     .badge {
-      background-color: #e0f2fe;
-      color: #0369a1;
-      font-size: 0.875rem;
+      background-color: #dbeafe;
+      color: #1e40af;
       font-weight: 600;
-      padding: 0.35rem 0.9rem;
+      padding: 0.25rem 0.75rem;
       border-radius: 9999px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
       margin: 0.25rem;
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      transition: transform 0.2s ease;
+      transition: transform 0.2s;
     }
     .badge:hover {
       transform: scale(1.05);
@@ -54,227 +46,217 @@
     .badge span {
       margin-left: 8px;
       cursor: pointer;
-      color: #dc2626;
-    }
-    button {
-      transition: background 0.3s ease, transform 0.2s ease;
+      color: red;
     }
     button:hover {
-      transform: translateY(-2px);
-    }
-    input:focus {
-      border-color: #3b82f6;
+      transform: scale(1.03);
     }
     html {
       scroll-behavior: smooth;
     }
   </style>
 </head>
-<body class="text-center mt-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+<body class="text-center bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
-  <!-- Logo -->
-  <img src="ChatGPT Image Jul 13, 2025, 10_22_19 PM.png" alt="SkillMap Logo" class="w-32 mx-auto mb-2 rounded-xl shadow-lg">
-  <span class="text-sm text-gray-500 dark:text-gray-400">Visualize your path 🚀</span>
+  <!-- Logo & Subtitle -->
+  <img src="ChatGPT Image Jul 13, 2025, 10_22_19 PM.png" alt="SkillMap Logo" class="w-24 mx-auto mb-1 rounded-xl shadow-md">
+  <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Visualize your growth 🚀</p>
 
   <!-- Header -->
-  <div class="w-full flex justify-between items-center max-w-4xl mx-auto mb-6 px-4">
-    <h1 class="text-3xl sm:text-4xl font-bold text-blue-700 dark:text-blue-400">🎯 SkillMap Visualizer</h1>
-    <button onclick="toggleDarkMode()" aria-label="Toggle dark mode" class="bg-gray-200 dark:bg-gray-700 text-sm text-gray-800 dark:text-gray-100 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-      Toggle Dark Mode
+  <div class="flex justify-between items-center max-w-4xl mx-auto px-4 mb-4">
+    <h1 class="text-3xl font-bold text-blue-700 dark:text-blue-400 tracking-tight">SkillMap Visualizer</h1>
+    <button onclick="toggleDarkMode()" class="bg-gray-200 dark:bg-gray-700 text-sm px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+      Toggle Mode
     </button>
   </div>
 
   <!-- Input Section -->
-  <div class="flex flex-wrap gap-3 mb-2 w-full max-w-lg justify-center mx-auto px-4">
-    <input id="skillInput" aria-label="Enter a skill" type="text" placeholder="Enter a skill (e.g. Python)"
-           class="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-400" />
+  <div class="flex flex-wrap gap-3 mb-3 w-full max-w-xl justify-center mx-auto px-4">
+    <input id="skillInput" type="text" placeholder="e.g. Python, React"
+           class="w-full sm:w-auto px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-white focus:ring-2 focus:ring-blue-400 outline-none" />
     <button onclick="addSkill()"
-            class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all">
+            class="bg-blue-600 text-white px-5 py-2 rounded-lg shadow hover:bg-blue-700 transition-all">
       Add Skill
     </button>
-    <button onclick="clearSkills()" class="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition-all">
-      Clear
+    <button onclick="clearSkills()"
+            class="bg-red-500 text-white px-5 py-2 rounded-lg shadow hover:bg-red-600 transition-all">
+      Clear All
     </button>
   </div>
-  <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Tip: Add one skill at a time like "Python", "React", "Excel"</p>
 
-  <!-- Skill Tags -->
-  <div id="skillList" class="flex flex-wrap justify-center mb-6 w-full max-w-xl mx-auto px-4"></div>
+  <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Tip: Enter skills like "JavaScript", "Excel", "Machine Learning"</p>
+
+  <!-- Skill Badges -->
+  <div id="skillList" class="flex flex-wrap justify-center mb-6 px-4"></div>
 
   <!-- Job Suggestions -->
-  <div id="suggestions" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto mb-6 px-4">
+  <div id="suggestions" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow max-w-xl mx-auto mb-6">
     <h2 class="text-xl font-semibold mb-2">Suggested Job Titles:</h2>
-    <ul id="jobList" class="list-disc list-inside"></ul>
+    <ul id="jobList" class="list-disc list-inside text-left"></ul>
   </div>
 
   <!-- Motivation -->
-  <div id="motivationBox" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto mb-6 px-4">
+  <div id="motivationBox" class="hidden bg-white dark:bg-gray-800 p-5 rounded-lg shadow max-w-xl mx-auto mb-6">
     <h2 class="text-xl font-semibold mb-2">🔥 Motivation Boost:</h2>
     <p id="motivationText"></p>
   </div>
 
   <!-- Chart -->
-  <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow w-full max-w-xl mx-auto px-4">
-    <h2 class="text-xl font-semibold mb-4">🧠 Skill Map Chart</h2>
+  <div class="bg-white dark:bg-gray-800 p-5 rounded-lg shadow max-w-xl mx-auto">
+    <h2 class="text-xl font-semibold mb-4">Skill Chart</h2>
     <canvas id="skillChart" height="300"></canvas>
   </div>
 
   <!-- Footer -->
-  <footer class="mt-10 text-gray-500 dark:text-gray-400 text-sm mb-6">
-    Made with ❤️ by You • © 2025 SkillMap
+  <footer class="mt-10 text-gray-500 dark:text-gray-400 text-sm mb-4">
+    Built with ❤️ by <a href="https://github.com/sahil99-akaa" target="_blank" class="underline">Sahil</a> • © 2025
   </footer>
 
-  <!-- Script -->
-  <script>
-    let skills = JSON.parse(localStorage.getItem('skills') || '[]');
+<script>
+  let skills = JSON.parse(localStorage.getItem('skills') || '[]');
 
-    const skillCategories = {
-      frontend: ["html", "css", "javascript", "react"],
-      backend: ["nodejs", "express", "mongodb", "mysql"],
-      data: ["python", "pandas", "numpy", "excel", "scikit-learn"],
-      devops: ["linux", "docker", "aws"],
-      mobile: ["android", "java", "kotlin"],
-      design: ["figma", "adobe xd", "design"],
-      ai: ["tensorflow", "machine learning", "deep learning"]
-    };
+  const skillCategories = {
+    frontend: ["html", "css", "javascript", "react"],
+    backend: ["nodejs", "express", "mongodb", "mysql"],
+    data: ["python", "pandas", "numpy", "excel", "scikit-learn"],
+    devops: ["linux", "docker", "aws"],
+    mobile: ["android", "java", "kotlin"],
+    design: ["figma", "adobe xd", "design"],
+    ai: ["tensorflow", "machine learning", "deep learning"]
+  };
 
-    const jobMatches = [
-      { title: "Frontend Developer", required: ["html", "css", "javascript"] },
-      { title: "React Developer", required: ["javascript", "react"] },
-      { title: "Backend Developer", required: ["nodejs", "express", "mongodb"] },
-      { title: "Full Stack Developer", required: ["html", "css", "javascript", "nodejs", "mongodb"] },
-      { title: "Data Analyst", required: ["python", "pandas", "excel"] },
-      { title: "Data Scientist", required: ["python", "numpy", "pandas", "scikit-learn"] },
-      { title: "DevOps Engineer", required: ["linux", "docker", "aws"] },
-      { title: "Android Developer", required: ["java", "kotlin", "android"] },
-      { title: "UI/UX Designer", required: ["figma", "adobe xd", "design"] },
-      { title: "AI/ML Engineer", required: ["python", "tensorflow", "machine learning"] }
-    ];
+  const jobMatches = [
+    { title: "Frontend Developer", required: ["html", "css", "javascript"] },
+    { title: "React Developer", required: ["javascript", "react"] },
+    { title: "Backend Developer", required: ["nodejs", "express", "mongodb"] },
+    { title: "Full Stack Developer", required: ["html", "css", "javascript", "nodejs", "mongodb"] },
+    { title: "Data Analyst", required: ["python", "pandas", "excel"] },
+    { title: "Data Scientist", required: ["python", "numpy", "pandas", "scikit-learn"] },
+    { title: "DevOps Engineer", required: ["linux", "docker", "aws"] },
+    { title: "Android Developer", required: ["java", "kotlin", "android"] },
+    { title: "UI/UX Designer", required: ["figma", "adobe xd", "design"] },
+    { title: "AI/ML Engineer", required: ["python", "tensorflow", "machine learning"] }
+  ];
 
-    const motivationQuotes = [
-      "Every expert was once a beginner. Keep pushing.",
-      "Great things never come from comfort zones.",
-      "Your skills are building your future. Don’t stop.",
-      "Consistency is the key to mastery.",
-      "Every skill added is one step closer to your dream job.",
-      "Work in silence, let your skills shout success.",
-      "You’re not behind. You’re building something amazing.",
-    ];
+  const motivationQuotes = [
+    "Every expert was once a beginner. Keep pushing.",
+    "Your skills are building your future. Keep going.",
+    "Consistency beats intensity. Stay consistent.",
+    "Your future job is waiting. Keep learning.",
+    "Let your skills shout your success."
+  ];
 
-    function toggleDarkMode() {
-      document.documentElement.classList.toggle('dark');
-    }
+  function toggleDarkMode() {
+    document.documentElement.classList.toggle('dark');
+  }
 
-    function addSkill() {
-      const input = document.getElementById("skillInput");
-      const skill = input.value.trim().toLowerCase();
-      if (skill && !skills.includes(skill)) {
-        skills.push(skill);
-        input.value = "";
-        localStorage.setItem('skills', JSON.stringify(skills));
-        updateAll();
-      }
-    }
-
-    function deleteSkill(skill) {
-      skills = skills.filter(s => s !== skill);
+  function addSkill() {
+    const input = document.getElementById("skillInput");
+    const skill = input.value.trim().toLowerCase();
+    if (skill && !skills.includes(skill)) {
+      skills.push(skill);
+      input.value = "";
       localStorage.setItem('skills', JSON.stringify(skills));
       updateAll();
     }
+  }
 
-    function clearSkills() {
-      skills = [];
-      localStorage.removeItem('skills');
-      updateAll();
-    }
+  function deleteSkill(skill) {
+    skills = skills.filter(s => s !== skill);
+    localStorage.setItem('skills', JSON.stringify(skills));
+    updateAll();
+  }
 
-    function updateAll() {
-      updateSkills();
-      updateJobs();
-      updateChart();
-      updateMotivation();
-    }
+  function clearSkills() {
+    skills = [];
+    localStorage.removeItem('skills');
+    updateAll();
+  }
 
-    function updateSkills() {
-      const skillList = document.getElementById("skillList");
-      skillList.innerHTML = "";
-      skills.forEach(skill => {
-        const span = document.createElement("div");
-        span.className = "badge";
-        span.innerHTML = `${skill} <span onclick="deleteSkill('${skill}')">❌</span>`;
-        skillList.appendChild(span);
-      });
-    }
+  function updateAll() {
+    updateSkills();
+    updateJobs();
+    updateChart();
+    updateMotivation();
+  }
 
-    function updateJobs() {
-      const suggestionsBox = document.getElementById("suggestions");
-      const jobList = document.getElementById("jobList");
-      jobList.innerHTML = "";
+  function updateSkills() {
+    const skillList = document.getElementById("skillList");
+    skillList.innerHTML = "";
+    skills.forEach(skill => {
+      const span = document.createElement("div");
+      span.className = "badge";
+      span.innerHTML = `${skill} <span onclick="deleteSkill('${skill}')">❌</span>`;
+      skillList.appendChild(span);
+    });
+  }
 
-      let matched = 0;
-      jobMatches.forEach(job => {
-        const hasAll = job.required.every(req => skills.includes(req));
-        if (hasAll) {
-          const li = document.createElement("li");
-          li.innerText = job.title;
-          jobList.appendChild(li);
-          matched++;
-        }
-      });
+  function updateJobs() {
+    const suggestionsBox = document.getElementById("suggestions");
+    const jobList = document.getElementById("jobList");
+    jobList.innerHTML = "";
 
-      suggestionsBox.style.display = skills.length ? "block" : "none";
-      if (matched === 0 && skills.length) {
-        jobList.innerHTML = "<li>No matching jobs yet. Keep adding skills!</li>";
-      }
-    }
-
-    const ctx = document.getElementById("skillChart").getContext("2d");
-    const chartData = {
-      labels: [],
-      datasets: [{
-        label: "Skill Categories",
-        data: [],
-        backgroundColor: ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#14b8a6", "#ec4899"]
-      }]
-    };
-    const skillChart = new Chart(ctx, {
-      type: "doughnut",
-      data: chartData,
-      options: {
-        responsive: true,
-        plugins: { legend: { position: "right" } },
-        animation: { animateRotate: true, duration: 1000 }
+    let matched = 0;
+    jobMatches.forEach(job => {
+      const hasAll = job.required.every(req => skills.includes(req));
+      if (hasAll) {
+        const li = document.createElement("li");
+        li.innerText = job.title;
+        jobList.appendChild(li);
+        matched++;
       }
     });
 
-    function updateChart() {
-      const counts = {};
-      for (const [cat, list] of Object.entries(skillCategories)) {
-        counts[cat] = skills.filter(skill => list.includes(skill)).length;
-      }
-
-      const filtered = Object.entries(counts).filter(([_, count]) => count > 0);
-      chartData.labels = filtered.map(([cat]) => cat.toUpperCase());
-      chartData.datasets[0].data = filtered.map(([_, count]) => count);
-      skillChart.update();
+    suggestionsBox.style.display = skills.length ? "block" : "none";
+    if (matched === 0 && skills.length) {
+      jobList.innerHTML = "<li>No matching jobs yet. Keep adding skills!</li>";
     }
+  }
 
-    function updateMotivation() {
-      const box = document.getElementById("motivationBox");
-      const text = document.getElementById("motivationText");
-
-      if (skills.length === 0) {
-        box.style.display = "none";
-        return;
-      }
-
-      const randomQuote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
-      text.innerText = randomQuote;
-      box.style.display = "block";
+  const ctx = document.getElementById("skillChart").getContext("2d");
+  const chartData = {
+    labels: [],
+    datasets: [{
+      label: "Skill Categories",
+      data: [],
+      backgroundColor: ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#14b8a6", "#ec4899"]
+    }]
+  };
+  const skillChart = new Chart(ctx, {
+    type: "doughnut",
+    data: chartData,
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "right" } },
+      animation: { animateRotate: true, duration: 1000 }
     }
+  });
 
-    // On Load
-    updateAll();
-  </script>
+  function updateChart() {
+    const counts = {};
+    for (const [cat, list] of Object.entries(skillCategories)) {
+      counts[cat] = skills.filter(skill => list.includes(skill)).length;
+    }
+    const filtered = Object.entries(counts).filter(([_, count]) => count > 0);
+    chartData.labels = filtered.map(([cat]) => cat.toUpperCase());
+    chartData.datasets[0].data = filtered.map(([_, count]) => count);
+    skillChart.update();
+  }
+
+  function updateMotivation() {
+    const box = document.getElementById("motivationBox");
+    const text = document.getElementById("motivationText");
+    if (skills.length === 0) {
+      box.style.display = "none";
+      return;
+    }
+    const randomQuote = motivationQuotes[Math.floor(Math.random() * motivationQuotes.length)];
+    text.innerText = randomQuote;
+    box.style.display = "block";
+  }
+
+  updateAll();
+</script>
+
 </body>
 </html>
